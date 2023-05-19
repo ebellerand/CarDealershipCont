@@ -1,35 +1,40 @@
 package com.learntocode;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 
 public class ContractDataManager {
     public void saveContract(Contract contract) {
         String filename = "contracts.csv";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename, true))) {
+            if (contract instanceof SalesContract) {
+                writeSalesContract(bw, (SalesContract) contract);
 
-        String line;
-        while ((line = br.readLine()) != null) {
-            processContract(line);
-        }
+            } else if (contract instanceof LeaseContract) {
+                writeLeaseContract(bw, (LeaseContract) contract);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    private void processContract(String line) {
-        String[] fields = line.split("\\|");
-        String contractType = fields[0];
-        String date = fields[1];
-        String customerName = fields[2];
-        String customerEmail = fields[3];
-        int carID = Integer.parseInt(fields[4]);
-        int year = Integer.parseInt(fields[5]);
-        String make = fields[6];
-        String model = fields[7];
-        String vehicleType = fields[8];
-        String color = fields[9];
-        int odometer = Integer.parseInt(fields[10]);
-
+    private void writeSalesContract(BufferedWriter bw, SalesContract contract) throws IOException {
+        bw.write("SALE|" + contract.getDate()  + "|" + contract.getCustomerName() + "|" +
+                contract.getCustomerEmail() + "|" + contract.getVehicleSold().getVin() + "|" +
+                contract.getVehicleSold().getYear() + "|" + contract.getVehicleSold().getMake() + "|" +
+                contract.getVehicleSold().getModel() + "|" + contract.getVehicleSold().getVehicleType() + "|" +
+                contract.getVehicleSold().getColor() + "|" + contract.getVehicleSold().getOdometer() + "|" +
+                contract.getVehicleSold().getPrice() + "|" + contract.getSalesTaxAmount() + "|" +
+                contract.getRecordingFee() + "|" + contract.getProcessingFee() + "|" + contract.getTotalPrice() +
+                "|" + contract.isFinanced() + "|" + contract.getMonthlyPayment());
+        bw.newLine();
     }
+    private void writeLeaseContract(BufferedWriter bw, LeaseContract contract) throws IOException {
+        bw.write("LEASE|" + contract.getDate() + "|" + contract.getCustomerName() + "|" +
+                contract.getCustomerEmail() + "|" + contract.getVehicleLeased().getCarID() + "|" +
+                contract.getVehicleLeased().getYear() + "|" + contract.getVehicleLeased().getMake() + "|" +
+                contract.getVehicleLeased().getModel() + "|" + contract.getVehicleLeased().getVehicleType() + "|" +
+                contract.getVehicleLeased().getColor() + "|" + contract.getVehicleLeased().getOdometer() + "|" +
+                contract.getVehicleLeased().getPrice() + "|" + contract.getEndingValue() + "|" +
+                contract.getLeaseFee() + "|" + contract.getTotalCost() + "|" + contract.getMonthlyPayment());
+        bw.newLine();}
 }

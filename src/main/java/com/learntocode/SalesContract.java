@@ -58,4 +58,35 @@ public class SalesContract extends Contract{
         return financedMonthlyPayment;
             }
 
-        }
+    public double getSalesTaxAmount() {
+        return salesTaxAmount;
+    }
+
+    public void setSalesTaxAmount(double salesTaxAmount) {
+        this.salesTaxAmount = salesTaxAmount;
+    }
+
+    public double getRecordingFee() {
+        return recordingFee;
+    }
+
+    public void setRecordingFee(double recordingFee) {
+        this.recordingFee = recordingFee;
+    }
+
+    public double getProcessingFee() {
+        return processingFee;
+    }
+
+    public void setProcessingFee(double processingFee) {
+        this.processingFee = processingFee;
+    }
+
+    public boolean isFinanced() {
+        return financed;
+    }
+
+    public void setFinanced(boolean financed) {
+        this.financed = financed;
+    }
+}
