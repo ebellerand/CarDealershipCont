@@ -21,6 +21,23 @@ private double monthlyPayment;
         }
     public double getTotalPrice() {
         return (getVehicleSold().getPrice() - expectedEndingValue) + leaseFee;
-    } }
+    }
+
+    public double getExpectedEndingValue() {
+        return expectedEndingValue;
+    }
+
+    public void setExpectedEndingValue(double expectedEndingValue) {
+        this.expectedEndingValue = expectedEndingValue;
+    }
+
+    public double getLeaseFee() {
+        return leaseFee;
+    }
+
+    public void setLeaseFee(double leaseFee) {
+        this.leaseFee = leaseFee;
+    }
+}
 
 

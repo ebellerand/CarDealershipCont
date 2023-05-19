@@ -30,11 +30,11 @@ public class ContractDataManager {
     }
     private void writeLeaseContract(BufferedWriter bw, LeaseContract contract) throws IOException {
         bw.write("LEASE|" + contract.getDate() + "|" + contract.getCustomerName() + "|" +
-                contract.getCustomerEmail() + "|" + contract.getVehicleLeased().getCarID() + "|" +
-                contract.getVehicleLeased().getYear() + "|" + contract.getVehicleLeased().getMake() + "|" +
-                contract.getVehicleLeased().getModel() + "|" + contract.getVehicleLeased().getVehicleType() + "|" +
-                contract.getVehicleLeased().getColor() + "|" + contract.getVehicleLeased().getOdometer() + "|" +
-                contract.getVehicleLeased().getPrice() + "|" + contract.getEndingValue() + "|" +
-                contract.getLeaseFee() + "|" + contract.getTotalCost() + "|" + contract.getMonthlyPayment());
+                contract.getCustomerEmail() + "|" + contract.getVehicleSold().getVin() + "|" +
+                contract.getVehicleSold().getYear() + "|" + contract.getVehicleSold().getMake() + "|" +
+                contract.getVehicleSold().getModel() + "|" + contract.getVehicleSold().getVehicleType() + "|" +
+                contract.getVehicleSold().getColor() + "|" + contract.getVehicleSold().getOdometer() + "|" +
+                contract.getVehicleSold().getPrice() + "|" + contract.getExpectedEndingValue() + "|" +
+                contract.getLeaseFee() + "|" + contract.getTotalPrice() + "|" + contract.getMonthlyPayment());
         bw.newLine();}
 }
