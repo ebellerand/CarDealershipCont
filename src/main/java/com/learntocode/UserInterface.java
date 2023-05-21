@@ -1,7 +1,11 @@
 package com.learntocode;
 
+import java.rmi.dgc.Lease;
 import java.util.Scanner;
 import java.util.List;
+import com.learntocode.SalesContract;
+import com.learntocode.LeaseContract;
+import com.learntocode.ContractDataManager;
 
 public class UserInterface {
 
@@ -26,6 +30,7 @@ public class UserInterface {
             System.out.println("7. Get all vehicles");
             System.out.println("8. Add vehicle");
             System.out.println("9. Remove vehicle");
+            System.out.println("10. Buy/Lease a Vehicle");
             System.out.println("99. Quit");
 
             System.out.print("Enter your choice: ");
@@ -59,6 +64,10 @@ public class UserInterface {
                 case "9":
                     processRemoveVehicleRequest();
                     break;
+                case "10":
+                    processVehicleSaleLease();
+                    break;
+
                 case "99":
                     quit = true;
                     break;
@@ -66,6 +75,57 @@ public class UserInterface {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
+    }
+
+    public void processVehicleSaleLease() {
+        System.out.println("Enter the vehicle vin: ");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+        Vehicle vehicle = dealership.getVehicleByVin(vin);
+        System.out.println("Enter the contract date: ");
+        String date = scanner.nextLine();
+        System.out.println("Enter the customer's name: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter the customer's email: ");
+        String email = scanner.nextLine();
+        System.out.println("Is this a sale or a lease: ");
+        String choice = scanner.nextLine();
+        SalesContract salesContract;
+
+        if (choice.equalsIgnoreCase("Sale")) {
+            double salesTaxAmount = 0.05;
+            double recordingFee = 100;
+            double processingFee;
+            if (vehicle.getPrice() < 1000) {
+                processingFee = 295;
+            } else {
+                processingFee = 495;
+            }
+
+            salesContract = new SalesContract(date, name, email, vehicle, salesTaxAmount, recordingFee, processingFee, false);
+            ContractDataManager contractDataManager = new ContractDataManager();
+            contractDataManager.saveContract(salesContract);
+            dealership.removeVehicle(vehicle);
+            System.out.println("Thank you for your purchase of your " + vehicle.getMake() + " " + vehicle.getModel() + " for the grand total of $" + (vehicle.getPrice() + salesTaxAmount + recordingFee + processingFee));
+
+
+        } else if (choice.equalsIgnoreCase("Lease")) {
+            double expectedEndingValue = vehicle.getPrice() * .50;
+            double leaseFee = vehicle.getPrice() * .07;
+
+            LeaseContract leaseContract = new LeaseContract(date, name, email, vehicle, expectedEndingValue, leaseFee);
+            ContractDataManager contractDataManager = new ContractDataManager();
+            contractDataManager.saveContract(leaseContract);
+            dealership.removeVehicle(vehicle);
+
+            double monthlyPayment = leaseContract.getMonthlyPayment();
+            System.out.println("Monthly Payment: $" + monthlyPayment);
+
+
+
+        }
+
+
     }
 
     public void processGetByPriceRequest() {

@@ -89,4 +89,6 @@ public class SalesContract extends Contract{
     public void setFinanced(boolean financed) {
         this.financed = financed;
     }
+
+
 }
