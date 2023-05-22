@@ -119,7 +119,7 @@ public class UserInterface {
             dealership.removeVehicle(vehicle);
 
             double monthlyPayment = leaseContract.getMonthlyPayment();
-            System.out.println("Monthly Payment: $" + monthlyPayment);
+            System.out.println("Thank you for leasing the: " + vehicle.getMake() + " " + vehicle.getModel() + "The expected ending value of your vehicle is: " + expectedEndingValue + " " + "Payment: $" + monthlyPayment + ". Your total price is $" + leaseContract.getTotalPrice());
 
 
 
